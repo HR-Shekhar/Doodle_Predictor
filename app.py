@@ -6,10 +6,10 @@ import numpy as np
 import cv2
 from tensorflow.keras.models import load_model
 
-# ✅ FIXED: Load .h5 model (older format to avoid 'batch_shape' issue)
-model = load_model("doodle_model.h5")
+# ✅ FIXED: Load model compatible with TF 2.13 by avoiding 'Input' deserialization issue
+model = load_model("doodle_model.h5")  # Make sure to train and save using h5 format
 
-# ⚠️ Make sure class names match training data
+# ⚠️ Update class names to match training classes
 class_names = ["circle", "crown", "skull", "smiley_face", "square", "star"]
 
 st.title("🎨 Doodle Classifier with AI")
@@ -42,7 +42,7 @@ if st.button("🧠 Predict"):
 
         img = cv2.resize(img, (28, 28))
         img = img.astype("float32") / 255.0
-        img = img.reshape(1, 784)  # ✅ FIXED: match model input shape
+        img = img.reshape(1, 28 * 28)  # ✅ Flatten to (1, 784)
 
         preds = model.predict(img)
         pred_class = np.argmax(preds)
