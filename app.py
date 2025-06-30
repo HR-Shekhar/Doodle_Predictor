@@ -6,7 +6,7 @@ from PIL import Image
 import cv2
 
 # Load the trained model
-model = load_model("doodle_model.h5")
+model = load_model("doodle_model.keras")
 
 # Define class names in order
 class_names = ['apple', 'star', 'triangle', 'fish', 'house']  # update as per your model
