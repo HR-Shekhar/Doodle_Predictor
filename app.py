@@ -7,7 +7,7 @@ from PIL import Image
 import cv2
 
 # ✅ Load the model saved from updated script
-model = load_model("doodle_model.keras")
+model = load_model("doodle_model.h5")
 
 # Update to your class names
 class_names = ["circle", "crown", "skull", "smiley_face", "square", "star"]
