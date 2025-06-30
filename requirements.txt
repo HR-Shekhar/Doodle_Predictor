@@ -1,5 +1,5 @@
-numpy
-streamlit
-streamlit_drawable_canvas
-tensorflow
+numpy==1.23.5
+tensorflow==2.13.0
+streamlit==1.25.0
+streamlit_drawable_canvas==0.9.3
 cv2
