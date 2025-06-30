@@ -1,28 +1,27 @@
 # app.py
-
 import streamlit as st
 from streamlit_drawable_canvas import st_canvas
 import numpy as np
-import cv2
 from tensorflow.keras.models import load_model
+from PIL import Image
+import cv2
 
-# ✅ Load updated model (works because model was built with Input())
+# ✅ Load the model saved from updated script
 model = load_model("doodle_model.keras")
 
-# Define correct class names
-class_names = ["circle", "crown", "skull", "smiley_face", "square", "star"]  # ✅ Match your training classes
+# Update to your class names
+class_names = ["circle", "crown", "skull", "smiley_face", "square", "star"]
 
-# UI
 st.title("🎨 Doodle Classifier with AI")
-st.markdown("Draw something below and let AI predict!")
+st.markdown("Draw an object and let the AI guess what it is!")
 
-# Sidebar settings
+# Canvas Settings
 st.sidebar.header("Canvas Settings")
-stroke_width = st.sidebar.slider("🖊️ Stroke Width", 1, 25, 10)
-stroke_color = st.sidebar.color_picker("🎨 Stroke Color", "#000000")
-bg_color = st.sidebar.color_picker("🧻 Background Color", "#FFFFFF")
+stroke_width = st.sidebar.slider("Stroke width", 1, 25, 10)
+stroke_color = st.sidebar.color_picker("Stroke color", "#000000")
+bg_color = st.sidebar.color_picker("Background color", "#FFFFFF")
 
-# Drawing canvas
+# Canvas
 canvas_result = st_canvas(
     fill_color="rgba(0, 0, 0, 0)",
     stroke_width=stroke_width,
@@ -35,32 +34,28 @@ canvas_result = st_canvas(
     key="canvas"
 )
 
-# Prediction logic
+# Predict Button
 if st.button("🧠 Predict"):
     if canvas_result.image_data is not None:
-        img = np.array(canvas_result.image_data, dtype=np.uint8)
-        img = cv2.cvtColor(img, cv2.COLOR_RGBA2GRAY)
+        img = canvas_result.image_data
 
-        # Invert for white bg drawings
+        img = cv2.cvtColor(np.array(img, dtype=np.uint8), cv2.COLOR_RGBA2GRAY)
+
         if bg_color == "#FFFFFF":
             img = 255 - img
 
         img = cv2.resize(img, (28, 28))
         img = img.astype("float32") / 255.0
-        img = img.reshape(1, 784)  # ✅ Flatten to match (784,) input shape
+        img = img.reshape(1, -1)  # Shape (1, 784)
 
-        # Predict
-        preds = model.predict(img)
-        pred_class = np.argmax(preds)
-        confidence = np.max(preds)
+        logits = model.predict(img)
+        pred_class = np.argmax(logits)
+        confidence = np.max(tf.nn.softmax(logits))
 
         st.markdown("### 🎯 Prediction:")
         st.success(f"**{class_names[pred_class]}** with **{confidence * 100:.2f}%** confidence.")
-        st.markdown("### 🔍 What the model saw:")
-        st.image(img.reshape(28, 28), width=150, clamp=True, channels='L')
-    else:
-        st.warning("🖌️ Please draw something first!")
 
-# Footer
-st.markdown("---")
-st.markdown("Built with ❤️ using Streamlit and Keras.")
+        st.markdown("### 🔍 Model's View:")
+        st.image(img.reshape(28, 28), width=150, clamp=True, channels="L")
+    else:
+        st.warning("Draw something first!")
