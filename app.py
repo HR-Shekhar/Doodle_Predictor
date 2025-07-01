@@ -7,7 +7,7 @@ import cv2
 from tensorflow.keras.models import load_model
 
 # ✅ FIXED: Load model compatible with TF 2.13 by avoiding 'Input' deserialization issue
-model = load_model("doodle_model.h5")  # Make sure to train and save using h5 format
+model = load_model("doodle_model.keras")  # Make sure to train and save using h5 format
 
 # ⚠️ Update class names to match training classes
 class_names = ["circle", "crown", "skull", "smiley_face", "square", "star"]
