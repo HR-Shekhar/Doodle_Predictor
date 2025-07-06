@@ -13,8 +13,8 @@ from tensorflow.keras.models import Sequential
 model = load_model("doodle_model.keras", compile=False)
 
 # ✅ Classes must match your training labels
-class_names = ["airplane", "apple", "bat", "cat", "circle", "clock", "cloud",
-               "crown", "diamond", "dog", "donut", "face", "fish", "hexagon",
+class_names = ["apple", "bat", "cat", "circle", "clock", "cloud",
+               "crown", "diamond", "dog", "donut", "fish",
                 "hot_dog", "lightning", "mountain", "river", "skull",
                 "smiley_face", "square", "star", "sun", "t-shirt", "tree"]
 
