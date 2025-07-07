@@ -1,5 +1,5 @@
 numpy==1.26.4
-tensorflow==2.19.0
+tensorflow==2.16.1
 typing-extensions==4.14.1
 streamlit==1.46.0
 rich==13.7.1
