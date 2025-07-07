@@ -5,8 +5,11 @@ from streamlit_drawable_canvas import st_canvas
 import tensorflow as tf
 import numpy as np
 import cv2
+import os
 
 # ✅ Load model
+os.environ["TF_KERAS_RESET_NAME_SCOPES"] = "1"  # Critical flag!
+
 from tensorflow.keras.models import load_model
 model = load_model("doodle_model.keras", compile=False, safe_mode=False)
 
