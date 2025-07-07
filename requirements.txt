@@ -5,5 +5,5 @@ streamlit==1.25.0
 rich==13.7.1
 streamlit_drawable_canvas==0.9.3
 opencv-python-headless
-sklearn
+scikit-learn
 joblib
