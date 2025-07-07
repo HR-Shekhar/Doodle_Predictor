@@ -68,7 +68,7 @@ if st.button("🧠 Predict"):
 
         # --- Show predictions
         st.markdown("### 🎯 Prediction")
-        st.success(f"**{[pred_class]}** with **{confidence * 100:.2f}%** confidence.")
+        st.success(f"**{class_names[pred_class]}** with **{confidence * 100:.2f}%** confidence.")
 
         st.markdown("### 👁️ What the model saw")
         st.image(img.reshape(28, 28), width=150, clamp=True, channels='L')
