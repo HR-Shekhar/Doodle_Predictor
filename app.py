@@ -10,7 +10,7 @@ import joblib
 
 # ✅ Load model saved in `.keras` format (TF ≥ 2.13 compatible)
 # Make sure the model was saved WITHOUT using keras.Input() directly — use shape in first layer
-model = load_model("doodle_model.keras", compile=False, safe_mode=False)
+model = load_model("doodle_model.h5", compile=False)
 data_scaler = joblib.load("data_scaler.pkl")
 scaler = data_scaler["scaler"]
 
