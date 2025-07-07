@@ -7,6 +7,9 @@ import numpy as np
 import cv2
 from tensorflow.keras.models import load_model
 
+from keras.src.backend.common import global_state
+global_state.set_global_attribute("name_scope_stack", [])
+model = load_model("doodle_model.keras")
 # ✅ Load model
 model = load_model("doodle_model.keras")
 
