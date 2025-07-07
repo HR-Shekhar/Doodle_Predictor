@@ -3,6 +3,8 @@
 import streamlit as st
 from streamlit_drawable_canvas import st_canvas
 import tensorflow as tf
+from keras.layers import Dropout
+from keras.regularizers import L2
 import numpy as np
 import cv2
 import os
