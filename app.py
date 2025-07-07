@@ -5,12 +5,11 @@ from streamlit_drawable_canvas import st_canvas
 import tensorflow as tf
 import numpy as np
 import cv2
-import os
-os.environ["TF_KERAS_RESET_NAME_SCOPES"] = "1"  # Critical flag!
 
+# ✅ Load model
 from tensorflow.keras.models import load_model
 model = load_model("doodle_model.keras", compile=False, safe_mode=False)
-# ✅ Load model
+
 
 
 class_names = ["apple", "bat", "circle", "clock", "cloud",
@@ -20,8 +19,11 @@ class_names = ["apple", "bat", "circle", "clock", "cloud",
 
 # Streamlit app setup
 st.set_page_config(page_title="Doodle Classifier", page_icon="🎨")
-st.title("🎨 Doodle Classifier with AI")
-st.markdown("Draw an object in the canvas and let the AI predict what it is!")
+st.title("🎨 Doodle Classifier")
+st.markdown("Draw an object in the canvas and let the DNN predict what it is!")
+st.markdown("Categories it can predict: "
+"apple, bat, circle, clock, cloud, crown, diamond, donut, fish, hot_dog, "
+"lightning, mountain, skull, smiley_face, square, star, sun, t-shirt, tree")
 
 # --- Sidebar canvas settings
 st.sidebar.header("✏️ Canvas Settings")
@@ -79,4 +81,4 @@ if st.button("🧠 Predict"):
         st.warning("🖌️ Please draw something before predicting.")
 
 st.markdown("---")
-st.markdown("Built with ❤️ using **Streamlit + Keras**")
+st.markdown("Built with ❤️ using **Tensorflow** by **Himanshu Shekhar**")
