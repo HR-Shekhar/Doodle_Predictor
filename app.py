@@ -5,12 +5,14 @@ from streamlit_drawable_canvas import st_canvas
 import numpy as np
 import cv2
 from tensorflow.keras.models import load_model
-from tensorflow.keras.layers import Input
-from tensorflow.keras.models import Sequential
+import joblib
 
 # ✅ Load model saved in `.keras` format (TF ≥ 2.13 compatible)
 # Make sure the model was saved WITHOUT using keras.Input() directly — use shape in first layer
 model = load_model("doodle_model.keras", compile=False)
+data_scaler = joblib.load("data_scaler.pkl")
+scaler = data_scaler["scaler"]
+
 
 # ✅ Classes must match your training labels
 class_names = ["apple", "bat", "circle", "clock", "cloud",
@@ -53,7 +55,7 @@ if st.button("🧠 Predict"):
 
         # Resize and normalize
         img = cv2.resize(img, (28, 28))
-        img = img.astype("float32") / 255.0
+        img = scaler.transform(img.astype("float32"))
         img = img.reshape(1, 28 * 28)  # Flatten
 
         # Predict
