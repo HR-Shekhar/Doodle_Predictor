@@ -2,6 +2,7 @@
 
 import streamlit as st
 from streamlit_drawable_canvas import st_canvas
+import tensorflow as tf
 import numpy as np
 import cv2
 from tensorflow.keras.models import load_model
@@ -60,8 +61,9 @@ if st.button("🧠 Predict"):
         
 
         # Predict
-        preds = model.predict(img)
-        pred_class = np.argmax(preds)
+        logits = model.predict(img)
+        preds = tf.nn.softmax(logits, axis=1).numpy()
+        pred_class = np.argmax(preds, axis=1)
         confidence = np.max(preds)
 
         # --- Show predictions
