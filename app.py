@@ -25,7 +25,8 @@ st.markdown("Draw an object in the canvas and let the AI predict what it is!")
 
 # --- Sidebar canvas settings
 st.sidebar.header("✏️ Canvas Settings")
-stroke_width = st.sidebar.slider("Stroke Width:", 1, 25, 10)
+st.sidebar.subheader("Don't modify these for the sake of model's performance")
+stroke_width = st.sidebar.slider("Stroke Width:", 19, 25, 25)
 stroke_color = st.sidebar.color_picker("Stroke Color:", "#000000")
 bg_color = st.sidebar.color_picker("Background Color:", "#FFFFFF")
 
@@ -36,8 +37,8 @@ canvas_result = st_canvas(
     stroke_color=stroke_color,
     background_color=bg_color,
     update_streamlit=True,
-    height=700,
-    width=700,
+    height=550,
+    width=550,
     drawing_mode="freedraw",
     key="canvas"
 )
