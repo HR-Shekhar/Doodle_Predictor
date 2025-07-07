@@ -10,7 +10,7 @@ import joblib
 
 # ✅ Load model saved in `.keras` format (TF ≥ 2.13 compatible)
 # Make sure the model was saved WITHOUT using keras.Input() directly — use shape in first layer
-model = load_model("doodle_model.h5", compile=False)
+model = load_model("doodle_model.keras")
 data_scaler = joblib.load("data_scaler.pkl")
 scaler = data_scaler["scaler"]
 
@@ -38,8 +38,8 @@ canvas_result = st_canvas(
     stroke_color=stroke_color,
     background_color=bg_color,
     update_streamlit=True,
-    height=500,
-    width=500,
+    height=700,
+    width=700,
     drawing_mode="freedraw",
     key="canvas"
 )
