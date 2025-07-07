@@ -11,7 +11,7 @@ from keras.src.backend.common import global_state
 global_state.set_global_attribute("name_scope_stack", [])
 model = load_model("doodle_model.keras")
 # ✅ Load model
-model = load_model("doodle_model.keras")
+
 
 class_names = ["apple", "bat", "circle", "clock", "cloud",
                "crown", "diamond", "donut", "fish",
