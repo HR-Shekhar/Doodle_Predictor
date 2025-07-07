@@ -17,8 +17,8 @@ scaler = data_scaler["scaler"]
 # ✅ Classes must match your training labels
 class_names = ["apple", "bat", "circle", "clock", "cloud",
                "crown", "diamond", "donut", "fish",
-                "hot_dog", "lightning", "mountain", "skull",
-                "smiley_face", "square", "star", "sun", "t-shirt", "tree"]
+               "hot_dog", "lightning", "mountain", "skull",
+               "smiley_face", "square", "star", "sun", "t-shirt", "tree"]
 
 st.set_page_config(page_title="Doodle Classifier", page_icon="🎨")
 st.title("🎨 Doodle Classifier with AI")
@@ -66,7 +66,7 @@ if st.button("🧠 Predict"):
 
         # --- Show predictions
         st.markdown("### 🎯 Prediction")
-        st.success(f"**{class_names[pred_class]}** with **{confidence * 100:.2f}%** confidence.")
+        st.success(f"**{[pred_class]}** with **{confidence * 100:.2f}%** confidence.")
 
         st.markdown("### 👁️ What the model saw")
         st.image(img.reshape(28, 28), width=150, clamp=True, channels='L')
