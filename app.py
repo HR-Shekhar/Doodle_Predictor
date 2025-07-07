@@ -5,10 +5,10 @@ from streamlit_drawable_canvas import st_canvas
 import tensorflow as tf
 import numpy as np
 import cv2
-from tensorflow.keras.models import load_model
+import os
+os.environ["TF_KERAS_RESET_NAME_SCOPES"] = "1"  # Critical flag!
 
-# from keras.src.backend.common import global_state
-# global_state.set_global_attribute("name_scope_stack", [])
+from tensorflow.keras.models import load_model
 model = load_model("doodle_model.keras")
 # ✅ Load model
 
