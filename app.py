@@ -6,21 +6,16 @@ import tensorflow as tf
 import numpy as np
 import cv2
 from tensorflow.keras.models import load_model
-import joblib
 
-# ✅ Load model saved in `.keras` format (TF ≥ 2.13 compatible)
-# Make sure the model was saved WITHOUT using keras.Input() directly — use shape in first layer
+# ✅ Load model
 model = load_model("doodle_model.keras")
-data_scaler = joblib.load("data_scaler.pkl")
-scaler = data_scaler["scaler"]
 
-
-# ✅ Classes must match your training labels
 class_names = ["apple", "bat", "circle", "clock", "cloud",
                "crown", "diamond", "donut", "fish",
                "hot_dog", "lightning", "mountain", "skull",
                "smiley_face", "square", "star", "sun", "t-shirt", "tree"]
 
+# Streamlit app setup
 st.set_page_config(page_title="Doodle Classifier", page_icon="🎨")
 st.title("🎨 Doodle Classifier with AI")
 st.markdown("Draw an object in the canvas and let the AI predict what it is!")
@@ -47,28 +42,31 @@ canvas_result = st_canvas(
 # --- Prediction
 if st.button("🧠 Predict"):
     if canvas_result.image_data is not None:
-        # Convert canvas RGBA to grayscale
+        # Convert RGBA canvas to grayscale
         img = cv2.cvtColor(np.array(canvas_result.image_data, dtype=np.uint8), cv2.COLOR_RGBA2GRAY)
 
-        # Invert image if background is white
-        if bg_color == "#FFFFFF":
+        # Invert if background is white (like training)
+        if bg_color.upper() == "#FFFFFF":
             img = 255 - img
 
-        # Resize and normalize
-        img = cv2.resize(img, (28, 28))
-        img = img.reshape(1, 28 * 28)  # Flatten
-        img = scaler.transform(img.astype("float32"))
-        
+        # Resize to 28x28
+        img = cv2.resize(img, (28, 28), interpolation=cv2.INTER_AREA)
+
+        # Normalize (same as training)
+        img = img.astype("float32") / 255.0
+
+        # Flatten for dense model
+        img = img.reshape(1, 28 * 28)
 
         # Predict
         logits = model.predict(img)
-        preds = tf.nn.softmax(logits, axis=1).numpy()
-        pred_class = np.argmax(preds, axis=1)
-        confidence = np.max(preds)
+        probs = tf.nn.softmax(logits, axis=1).numpy()
+        pred_class = np.argmax(probs, axis=1).item()
+        confidence = np.max(probs)
 
-        # --- Show predictions
+        # --- Results
         st.markdown("### 🎯 Prediction")
-        st.success(f"**{class_names[pred_class.item()]}** with **{confidence * 100:.2f}%** confidence.")
+        st.success(f"**{class_names[pred_class]}** with **{confidence * 100:.2f}%** confidence.")
 
         st.markdown("### 👁️ What the model saw")
         st.image(img.reshape(28, 28), width=150, clamp=True, channels='L')
