@@ -55,8 +55,9 @@ if st.button("🧠 Predict"):
 
         # Resize and normalize
         img = cv2.resize(img, (28, 28))
-        img = scaler.transform(img.astype("float32"))
         img = img.reshape(1, 28 * 28)  # Flatten
+        img = scaler.transform(img.astype("float32"))
+        
 
         # Predict
         preds = model.predict(img)
