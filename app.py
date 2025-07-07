@@ -10,7 +10,6 @@ from tensorflow.keras.models import load_model
 # ✅ Load model
 model = load_model("doodle_model.keras")
 
-# ✅ Class labels (must match training)
 class_names = ["apple", "bat", "circle", "clock", "cloud",
                "crown", "diamond", "donut", "fish",
                "hot_dog", "lightning", "mountain", "skull",
