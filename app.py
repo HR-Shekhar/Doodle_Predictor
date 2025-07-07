@@ -13,9 +13,9 @@ from tensorflow.keras.models import Sequential
 model = load_model("doodle_model.keras", compile=False)
 
 # ✅ Classes must match your training labels
-class_names = ["apple", "bat", "cat", "circle", "clock", "cloud",
-               "crown", "diamond", "dog", "donut", "fish",
-                "hot_dog", "lightning", "mountain", "river", "skull",
+class_names = ["apple", "bat", "circle", "clock", "cloud",
+               "crown", "diamond", "donut", "fish",
+                "hot_dog", "lightning", "mountain", "skull",
                 "smiley_face", "square", "star", "sun", "t-shirt", "tree"]
 
 st.set_page_config(page_title="Doodle Classifier", page_icon="🎨")
