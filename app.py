@@ -11,7 +11,7 @@ import os
 os.environ["TF_KERAS_RESET_NAME_SCOPES"] = "1"  # Critical flag!
 
 from tensorflow.keras.models import load_model
-model = load_model("doodle_model.keras", compile=False, safe_mode=False)
+model = load_model("doodle_model.keras", compile=False, safe_mode=False, custom_objects={"Dropout": Dropout, "L2": L2})
 
 
 
